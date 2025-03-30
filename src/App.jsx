@@ -56,6 +56,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [ascending, setAscending] = useState(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -84,12 +85,19 @@ export default function Game() {
     );
   });
 
+  if (!ascending) {
+    moves.reverse();
+  }
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+        <button onClick={() => setAscending(!ascending)}>
+          {ascending ? '내림차순' : '오름차순'}
+        </button>
         <ol>{moves}</ol>
       </div>
     </div>
