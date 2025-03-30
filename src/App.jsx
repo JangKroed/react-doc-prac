@@ -84,8 +84,19 @@ export default function Game() {
 
   const moves = history.map((squares, move) => {
     let description;
+
     if (move > 0) {
-      description = `현재 ${move} 수를 진행 중입니다.`;
+      const prevSquares = history[move - 1];
+      const currSquares = history[move];
+
+      const target = currSquares.findIndex(
+        (square, i) => square !== prevSquares[i]
+      );
+
+      const x = Math.floor(target / 3);
+      const y = target % 3;
+
+      description = `[${x + 1}, ${y + 1}]현재 ${move} 수를 진행 중입니다.`;
     } else {
       description = 'Go to game start';
     }
